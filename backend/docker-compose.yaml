@@ -1,0 +1,14 @@
+version: "3"
+
+services: 
+  python:
+    container_name: python_container
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes: 
+      - ./project:/work
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+    command: /bin/sh -c "while :; do sleep 10; done"

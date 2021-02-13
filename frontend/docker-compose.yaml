@@ -1,0 +1,13 @@
+version: "3"
+
+services: 
+  react-ts:
+    container_name: react-ts
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes: 
+      - ./project:/work
+    ports:
+      - "3000:3000"
+    command: /bin/sh -c "while :; do sleep 10; done"

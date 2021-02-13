@@ -1,0 +1,25 @@
+version: "3"
+
+services: 
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes: 
+      - ./frontend/project:/work
+    ports:
+      - "3000:3000"
+    command: /bin/sh -c "while :; do sleep 10; done"
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes: 
+      - ./backend/project:/work
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+    command: /bin/sh -c "while :; do sleep 10; done"
