@@ -14,6 +14,8 @@ RUN add-apt-repository ppa:deadsnakes/ppa \
 && ln -s /usr/bin/python3.8 /usr/local/bin/python3 \
 && ln -s /usr/bin/python3.8 /usr/local/bin/python
 
+RUN apt-get install sqlite3
+
 # install common python packages
 ADD ./project/requirements.txt /tmp
 RUN pip3 install pip setuptools -U && pip3 install -r /tmp/requirements.txt
