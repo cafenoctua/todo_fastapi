@@ -28,6 +28,9 @@ def get_user_todo(db: Session, user_name: str):
 def create(db: Session, todo: schemas.Todo):
     db_todoitem = models.Todo(title=todo.title, description=todo.description,
                               status=todo.status, user_name=todo.user_name)
+    if type(todo.title) != str or type(todo.description) != str or type(todo.status) != str or type(todo.user_name) != str:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="All parameter type is string. Please input string type.")
     db.add(db_todoitem)
     db.commit()
     db.refresh(db_todoitem)
