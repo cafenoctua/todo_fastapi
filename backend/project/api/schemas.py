@@ -10,6 +10,11 @@ class Users(BaseModel):
     class Config():
         orm_mode = True
 
+class ShowUsers(BaseModel):
+    name: str
+
+    class Config():
+        orm_mode = True
 
 class Todo(BaseModel):
     title: str
