@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import FastAPI
 from sqlalchemy.orm import Session
+import uvicorn
 
 from . import models
 from .routers import todo, user, authentication
@@ -13,3 +14,7 @@ app = FastAPI()
 app.include_router(todo.router)
 app.include_router(user.router)
 app.include_router(authentication.router)
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

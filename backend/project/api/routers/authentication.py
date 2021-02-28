@@ -17,7 +17,7 @@ router = APIRouter(
 def register(data: schemas.Users, db: Session = Depends(get_db)):
     return authentication.register(db, data)
 
-@router.post("/login", response_model=schemas.ShowUsers)
+@router.post("/login")
 def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     return authentication.login(db, request)
 

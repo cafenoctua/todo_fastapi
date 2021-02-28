@@ -7,7 +7,7 @@ from jose import JWTError, jwt
 
 from .. import schemas
 
-load_dotenv(Path(".") / ".env")
+load_dotenv("/work/api/.env")
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 print(os.getenv("ALGORITHM"))
