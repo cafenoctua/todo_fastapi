@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from ..cruds import todo
 from .. import schemas
+from ..utils import auth_func
 
 router = APIRouter(
     prefix="/todo",
@@ -14,7 +15,8 @@ router = APIRouter(
 
 
 @router.post("/", response_model=schemas.Todo)
-def post_todo(data: schemas.Todo, db: Session = Depends(get_db)):
+def post_todo(data: schemas.Todo, db: Session = Depends(get_db), current_user: schemas.Users = Depends(auth_func.get_current_user)):
+    print(f"Current user: {current_user}")
     return todo.create(db, data)
 
 
