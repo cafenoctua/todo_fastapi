@@ -15,13 +15,14 @@ router = APIRouter(
 
 
 @router.post("/", response_model=schemas.Todo)
-def post_todo(data: schemas.Todo, db: Session = Depends(get_db), current_user: schemas.Users = Depends(auth_func.get_current_user)):
-    print(f"Current user: {current_user}")
+def post_todo(data: schemas.Todo, db: Session = Depends(get_db), current_user: schemas.User = Depends(auth_func.get_current_user)):
+    # print(f"Current user: {current_user}")
     return todo.create(db, data)
+    # return "test"
 
 
 @router.get("/", response_model=List[schemas.ShowTodo])
-def get_all_todo(db: Session = Depends(get_db), skip: Optional[int] = 0, limit: Optional[int] = 100):
+def get_all_todo(db: Session = Depends(get_db), skip: Optional[int] = 0, limit: Optional[int] = 100, current_user: schemas.User = Depends(auth_func.get_current_user)):
     return todo.all(db, skip, limit)
 
 

@@ -10,6 +10,12 @@ class Users(BaseModel):
     class Config():
         orm_mode = True
 
+class User(BaseModel):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    disabled: Optional[bool] = None
+
 class ShowUsers(BaseModel):
     name: str
 
