@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -13,6 +13,7 @@ class Users(Base):
     name = Column(String)
     email = Column(String)
     password = Column(String)
+    logined = Column(Boolean, default=False)
     
     # group_id = relationship("Groups", back_populates="user")
     todo_id = relationship("Todo", back_populates="user")

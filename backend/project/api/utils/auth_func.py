@@ -76,20 +76,6 @@ def verify_token(token: str, credentials_exception):
 
     return token_data
 
-
-# async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
-#     credentials_exception = HTTPException(
-#         status_code=status.HTTP_401_UNAUTHORIZED,
-#         detail="Could not validate credentials",
-#         headers={"WWW-Authenticate": "Bearer"},
-#     )
-
-#     token_data = verify_token(token, credentials_exception)
-#     user = get_user(db, username=token_data.username)
-#     if user is None:
-#         raise credentials_exception
-#     return user
-
 async def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -109,7 +95,7 @@ async def get_current_user(db: Session = Depends(get_db), token: str = Depends(o
         raise credentials_exception
     return user
 
-async def get_current_active_user(current_user: schemas.User = Depends(get_current_user)):
+async def get_current_active_user(current_user: schemas.Users = Depends(get_current_user)):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
