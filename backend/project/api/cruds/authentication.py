@@ -1,3 +1,6 @@
+from datetime import timedelta
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -23,13 +26,16 @@ def register(db: Session, data: schemas.Users):
     return user
 
 
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 def login(db: Session, request: OAuth2PasswordRequestForm):
     if "@" in request.username:
-        user = db.query(models.Users).filter(
-            models.Users.email == request.username).first()
+        user_update = db.query(models.Users).filter(
+            models.Users.email == request.username)
+        user = user_update.first()
     else:
-        user = db.query(models.Users).filter(
-            models.Users.name == request.username).first()
+        user_update = db.query(models.Users).filter(
+            models.Users.name == request.username)
+        user = user_update.first()
 
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -39,5 +45,15 @@ def login(db: Session, request: OAuth2PasswordRequestForm):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail="Incorrect password")
 
-    access_token = auth_func.create_access_token(data={"sub": user.name})
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = auth_func.create_access_token(data={"sub": user.name}, expires_delta=access_token_expires)
+    user_update.update({"logined": True})
+    db.commit()
+
     return {"access_token": access_token, "token_type": "bearer"}
+
+def logout(user_id: str, db: Session):
+    user = db.query(models.Users).filter(models.Users.id == user_id)
+    user.update({"logined": False})
+    db.commit()
+    return "Done"

@@ -1,6 +1,11 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 
+
+class User(BaseModel):
+    id: str
+    name: str
+    email: str
 
 class Users(BaseModel):
     name: str
@@ -10,13 +15,16 @@ class Users(BaseModel):
     class Config():
         orm_mode = True
 
-class User(BaseModel):
-    username: str
-    email: Optional[str] = None
-    full_name: Optional[str] = None
-    disabled: Optional[bool] = None
+class UserPass(BaseModel):
+    password: str
 
 class ShowUsers(BaseModel):
+    id: List[str]
+
+    class Config():
+        orm_mode = True
+
+class ShowUser(BaseModel):
     name: str
 
     class Config():
