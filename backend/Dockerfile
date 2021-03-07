@@ -29,3 +29,6 @@ WORKDIR /work
 RUN ldconfig \
 && apt-get clean \
 && apt-get autoremove
+
+EXPOSE 8000
+ENTRYPOINT ["uvicorn", "api.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
