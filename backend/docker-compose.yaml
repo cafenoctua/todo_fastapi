@@ -10,4 +10,4 @@ services:
       - ./project:/work
     ports:
       - "8000:8000"
-    command: /bin/sh -c "while :; do sleep 10; done"
+    # command: /bin/sh -c "while :; do sleep 10; done"
